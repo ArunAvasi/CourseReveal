@@ -17,7 +17,7 @@ def index():
 @app.route("/courseList", methods=["POST"])
 def courseList():
     try:
-        # Attempt to convert 'number'
+        # Attempt to convert
         section = int(request.form.get('number', 0))
         name = request.form.get('name', '')
         table.put_item(
