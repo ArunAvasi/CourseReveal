@@ -33,7 +33,10 @@ def login_CSP(username: str, password: str):
 
 open_page('https://sims.rutgers.edu/csp/builder.htm?semester=92023#Page_CSPSelectCourseTab')
 time.sleep(1)
+
+#Add login info here Username, Password
 login_CSP('', '')
+
 time.sleep(15)
 subject = browser.find_elements(by=By.TAG_NAME, value="Option")
 subject[7].click()
