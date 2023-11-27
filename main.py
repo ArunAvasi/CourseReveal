@@ -11,27 +11,27 @@ table = dynamodb.Table('SectionTable')
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("login.html")
 
 
-@app.route("/submit_number", methods=["POST"])
-def submit_number():
+@app.route("/courseList", methods=["POST"])
+def courseList():
     try:
-        # Attempt to convert 'number' form data to an integer
+        # Attempt to convert 'number' form data to an int
         section = int(request.form.get('number', 0))
         name = request.form.get('name', '')
         table.put_item(
             Item={
+
                 'SectionID': section,
                 'StudentName': name,
-
             }
         )
         response = table.query(
             KeyConditionExpression=boto3.dynamodb.conditions.Key('SectionID').eq(section)
         )
         items = response.get('Items', [])
-        return render_template("index.html", names=items)
+        return render_template("login.html", names=items)
 
     except Exception as e:
         # Handle errors
