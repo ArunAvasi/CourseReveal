@@ -52,6 +52,18 @@
 
     <span id="error" style="color: red; display: none;">Please enter a number for the section.</span><br>
     <input type="submit" value="Submit">
+
     </form>
+
+    <!-- Class View -->
+    {% if classes %}
+        {% for class in classes %}
+        <div>
+            <h3>{{ class.ClassName }}</h3>
+            <p>Section: {{ class.SectionID }}</p>
+        </div>
+    {% endfor %}
+
+    {% endif %}
 </body>
 </html>
