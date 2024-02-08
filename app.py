@@ -1,5 +1,5 @@
 from boto3.dynamodb.conditions import Key
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import firebase_admin, secrets
 from firebase_admin import credentials, firestore, auth
 import boto3
@@ -23,7 +23,18 @@ def main():
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    uid = session.get('uid')
+    if not uid:
+        # Redirect to login if UID not in session
+        return redirect(url_for('login'))
+
+    # Fetch classes from the database
+    classes = table.query(
+        KeyConditionExpression=Key('UserID').eq(uid)
+    )
+
+    # Pass classes to the home template
+    return render_template('home.html', classes=classes['Items'])
 
 @app.route('/login')
 def login():
@@ -62,9 +73,6 @@ def add_class():
             'ClassName': className
         }
     )
-
-
-    # get all classes with the same UserID
     classes = table.query(
         KeyConditionExpression=Key('UserID').eq(uid)
     )
