@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1932295-3eab-4444-aad1-50ea1e282a97" name="Changes" comment="dynamodb query for classes">
+    <list default="true" id="a1932295-3eab-4444-aad1-50ea1e282a97" name="Changes" comment="home query">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
@@ -94,6 +94,12 @@
       <workItem from="1707245083261" duration="16123000" />
       <workItem from="1707342152242" duration="2003000" />
       <workItem from="1707360604280" duration="1314000" />
+      <workItem from="1707413804122" duration="3377000" />
+      <workItem from="1707692983617" duration="179000" />
+      <workItem from="1707693173857" duration="3541000" />
+      <workItem from="1707777953357" duration="1167000" />
+      <workItem from="1707851597425" duration="815000" />
+      <workItem from="1707852423325" duration="1926000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -151,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707342716077</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="home query">
+      <option name="closed" value="true" />
+      <created>1707415001221</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1707415001221</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,9 +177,10 @@
     <MESSAGE value="User Hash ID" />
     <MESSAGE value="Session and dynamodb setup" />
     <MESSAGE value="dynamodb query for classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="dynamodb query for classes" />
+    <MESSAGE value="home query" />
+    <option name="LAST_COMMIT_MESSAGE" value="home query" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CourseRevealAPP$CourseRevealAPP.coverage" NAME="CourseRevealAPP Coverage Results" MODIFIED="1707360610221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CourseRevealAPP$CourseRevealAPP.coverage" NAME="CourseRevealAPP Coverage Results" MODIFIED="1707853495132" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

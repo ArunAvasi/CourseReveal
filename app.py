@@ -76,9 +76,43 @@ def add_class():
     classes = table.query(
         KeyConditionExpression=Key('UserID').eq(uid)
     )
-    #return classes to home.html
     return render_template('home.html', classes=classes['Items'])
 
+
+@app.route('/deleteClass', methods=['POST'])
+def delete_class():
+    uid = session.get('uid')
+    if uid is None:
+        return jsonify({'status': 'error', 'message': 'Authentication required'}), 401
+
+    sectionID=request.form.get('classID')
+    sectionID = int(sectionID) if sectionID.isdigit() else None
+    response = table.delete_item(
+        Key={
+            'UserID': uid,
+            'SectionID': sectionID
+        }
+    )
+    classes = table.query(
+        KeyConditionExpression=Key('UserID').eq(uid)
+    )
+    return render_template('home.html', classes=classes['Items'])
+
+@app.route('/ClassStudents', methods=['POST'])
+def class_students():
+    uid = session.get('uid')
+    if uid is None:
+        return jsonify({'status': 'error', 'message': 'Authentication required'}), 401
+
+    sectionID = request.form.get('classID')
+    sectionID = int(sectionID) if sectionID.isdigit() else None
+    response = table.get_item(
+        Key={
+            'UserID': uid,
+            'SectionID': sectionID
+        }
+    )
+    return render_template('students.html', classInfo=response['Item'])
 
 if __name__ == '__main__':
     app.run(debug=True)
