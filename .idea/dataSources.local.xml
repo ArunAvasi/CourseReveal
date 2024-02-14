@@ -2,7 +2,9 @@
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="PY-233.13763.11">
     <data-source name="DynamoDB Tables" uuid="7dc1aabb-92c0-44be-b1cd-1cdafb58680f">
-      <database-info product="Dynamo" version="1.0" jdbc-version="4.3" driver-name="Dynamo JDBC Driver" driver-version="0.7" dbms="DYNAMO" exact-version="1.0" exact-driver-version="0.7" />
+      <database-info product="Dynamo" version="1.0" jdbc-version="4.3" driver-name="Dynamo JDBC Driver" driver-version="0.7" dbms="DYNAMO" exact-version="1.0" exact-driver-version="0.7">
+        <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
+      </database-info>
       <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
       <secret-storage>master_key</secret-storage>
       <auth-provider>dg.aws.profile</auth-provider>

@@ -1,8 +1,8 @@
 from boto3.dynamodb.conditions import Key
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
-import firebase_admin, secrets
+import firebase_admin, secrets, pandas as pd, boto3
 from firebase_admin import credentials, firestore, auth
-import boto3
+
 
 app = Flask(__name__)
 
@@ -59,20 +59,32 @@ def add_class():
     if uid is None:
         return jsonify({'status': 'error', 'message': 'Authentication required'}), 401
 
-    className = request.form.get('className')
     sectionID = request.form.get('sectionNumber')
     sectionID = int(sectionID) if sectionID.isdigit() else None
 
-    if className is None or sectionID is None:
-        return jsonify({'status': 'error', 'message': 'Missing className or sectionNumber'}), 400
+    if sectionID is None:
+        return jsonify({'status': 'error', 'message': 'Missing Section ID'}), 400
+
+    df=pd.read_csv('/Users/arunavasi/Code/Data.csv')
+    if df.empty:
+        return jsonify({'status': 'error', 'message': 'No data found in the file'}), 400
+
+    section_id_column = 'index'  # Replace with the actual column name for section IDs
+    class_name_column = 'className'
+
+
+    className= df.loc[df[section_id_column] == sectionID, class_name_column].iloc[0]
+    print(className)
+
 
     response = table.put_item(
-        Item={
-            'UserID': uid,
-            'SectionID': sectionID,
-            'ClassName': className
-        }
+    Item={
+        'UserID': uid,
+        'SectionID': sectionID,
+        'ClassName': className
+    }
     )
+
     classes = table.query(
         KeyConditionExpression=Key('UserID').eq(uid)
     )
