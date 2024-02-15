@@ -2,8 +2,7 @@ from boto3.dynamodb.conditions import Key
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import firebase_admin, secrets, pandas as pd, boto3
 from firebase_admin import credentials, firestore, auth
-
-
+from boto3.dynamodb.conditions import Attr
 app = Flask(__name__)
 
 app.secret_key = secrets.token_hex(16)
@@ -32,6 +31,8 @@ def home():
     classes = table.query(
         KeyConditionExpression=Key('UserID').eq(uid)
     )
+
+    class_students(17706)
 
     # Pass classes to the home template
     return render_template('home.html', classes=classes['Items'])
@@ -110,21 +111,52 @@ def delete_class():
     )
     return render_template('home.html', classes=classes['Items'])
 
+
 @app.route('/ClassStudents', methods=['POST'])
-def class_students():
-    uid = session.get('uid')
-    if uid is None:
+def class_students(sectionID):
+    if 'uid' not in session:
         return jsonify({'status': 'error', 'message': 'Authentication required'}), 401
 
-    sectionID = request.form.get('classID')
-    sectionID = int(sectionID) if sectionID.isdigit() else None
-    response = table.get_item(
-        Key={
-            'UserID': uid,
-            'SectionID': sectionID
-        }
+    response = table.scan(
+        FilterExpression=Attr('SectionID').eq(sectionID)
     )
-    return render_template('students.html', classInfo=response['Item'])
+
+    uids = [item['UserID'] for item in response['Items']]
+
+    for uid in uids:
+        print(uid)
+
+    return jsonify({'status': 'success', 'uids': uids})
+
+
+@app.route('/getInfo', methods=['POST'])
+def getInfo(SectionID):
+    df = pd.read_csv('/Users/arunavasi/Code/Data.csv')
+    if df.empty:
+        return jsonify({'status': 'error', 'message': 'No data found in the file'}), 400
+    section_id_column = 'index'
+    classCode = 'classCode'
+    indexId = 'section'
+    class_name_column = 'className'
+
+    row = df.loc[df['index'] == SectionID]
+    if row.empty:
+        return jsonify({'status': 'error', 'message': 'Section not found'}), 404
+
+    ClassNum = row[classCode].values[0]
+    index = row[indexId].values[0]
+    Name = row[class_name_column].values[0]
+
+    return jsonify({'status': 'success', 'ClassNum': ClassNum, 'index': index, 'Name': Name})
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
