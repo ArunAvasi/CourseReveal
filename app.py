@@ -50,6 +50,14 @@ def verify_token():
         uid = decoded_token['uid']
         session['uid'] = uid
 
+        full_name = decoded_token.get('name', '')
+        split_name = full_name.split(' ')
+        first_name = split_name[0]
+        last_name = split_name[-1]
+        session['first_name'] = first_name
+        session['last_name'] = last_name
+
+
         return jsonify({'status': 'success', 'uid': uid})
     except auth.AuthError:
         return jsonify({'status': 'error', 'message': 'Invalid token'}), 401
@@ -70,19 +78,23 @@ def add_class():
     if df.empty:
         return jsonify({'status': 'error', 'message': 'No data found in the file'}), 400
 
-    section_id_column = 'index'  # Replace with the actual column name for section IDs
+    section_id_column = 'index'
     class_name_column = 'className'
 
 
     className= df.loc[df[section_id_column] == sectionID, class_name_column].iloc[0]
     print(className)
+    firstName = session.get('first_name')
+    lastName = session.get('last_name')
 
 
     response = table.put_item(
     Item={
         'UserID': uid,
         'SectionID': sectionID,
-        'ClassName': className
+        'ClassName': className,
+        'FirstName': firstName,
+        'LastName': lastName
     }
     )
 
@@ -121,12 +133,11 @@ def class_students(sectionID):
         FilterExpression=Attr('SectionID').eq(sectionID)
     )
 
-    uids = [item['UserID'] for item in response['Items']]
+    firstNames = [item['FirstName'] for item in response['Items']]
+    lastNames = [item['LastName'] for item in response['Items']]
+    return jsonify({'status': 'success', 'students': list(zip(firstNames, lastNames))})
 
-    for uid in uids:
-        print(uid)
 
-    return jsonify({'status': 'success', 'uids': uids})
 
 
 @app.route('/getInfo', methods=['POST'])
@@ -148,15 +159,6 @@ def getInfo(SectionID):
     Name = row[class_name_column].values[0]
 
     return jsonify({'status': 'success', 'ClassNum': ClassNum, 'index': index, 'Name': Name})
-
-
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
