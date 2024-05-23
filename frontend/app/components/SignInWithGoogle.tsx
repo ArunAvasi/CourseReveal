@@ -67,7 +67,7 @@ const SignInWithGoogle = () => {
   };
   return (
     <div
-      className="flex items-center justify-center gap-2 active:scale-[.98] active:duration-75 hover:scale-[1.02] ease-in-out transition-all bg-slate-50 h-16 w-72 rounded-full cursor-pointer"
+      className="flex items-center justify-center gap-2 click-animation active:scale-[.98] active:duration-75 hover:scale-[1.02] ease-in-out transition-all bg-slate-50 h-16 w-72 rounded-full cursor-pointer"
       onClick={signIn}
     >
       <svg viewBox="0 0 48 48" className="h-10">

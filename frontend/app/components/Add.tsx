@@ -20,10 +20,8 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-const Add = ({ sectionNumber }) => {
+const Add = ({ sectionNumber, onAddResponse }) => {
   const handleSubmit = async (event) => {
-    console.log(sectionNumber);
-
     event.preventDefault(); // Prevent the default form submission behavior
 
     try {
@@ -37,7 +35,8 @@ const Add = ({ sectionNumber }) => {
       });
 
       if (response.ok) {
-        console.log("Class added successfully");
+        const jsonResponse = await response.json(); // Parse the JSON response
+        onAddResponse(jsonResponse);
         // Additional success handling
       } else {
         console.error("Error adding class");
@@ -49,7 +48,7 @@ const Add = ({ sectionNumber }) => {
   };
 
   return (
-    <main>
+    <main className="active:scale-[.98] active:duration-75 hover:scale-[1.1] ease-in-out transition-all">
       <form onSubmit={handleSubmit}>
         <input
           type="submit"
