@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="DynamoDB Tables">
-  <database-model serializer="dbm" dbms="DYNAMO" family-id="DYNAMO" format-version="4.52">
+  <database-model serializer="dbm" dbms="DYNAMO" family-id="DYNAMO" format-version="4.51">
     <root id="1">
       <ServerVersion>1.0</ServerVersion>
     </root>

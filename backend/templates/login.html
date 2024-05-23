@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
     <title>Login</title>
     <!-- Firebase JS SDK -->
     <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
@@ -55,33 +54,10 @@
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
         // Display the error message
-        document.getElementById('error-message').innerText = errorMessage;
+        console.log(errorMessage)
     });
 }
 </script>
 
 </body>
 </html>
-=======
-    <title>CourseReveal</title>
-</head>
-<body>
-    <h1>Enter Course Section</h1>
-    <form action="/courseList" method="post">
-        <label for="sectionInput">Enter a section number:</label>
-        <input type="number" id="sectionInput" name="number" required>
-        <label for="nameInput">Enter your name:</label>
-        <input type="text" id="nameInput" name="name" required>
-        <input type="submit" value="Submit">
-    </form>
-    {% if names %}
-        <h2>Names in section:</h2>
-        <ul>
-        {% for name in names %}
-            <li>{{ name }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-</body>
-</html>
->>>>>>> Varun

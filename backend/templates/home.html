@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="{{ url_for('static', filename='firebase-auth.js') }}"></script>
+    <style>
+        #classForm {
+            display: none;
+        }
+    </style>
+    <script>
+        function showForm() {
+    var form = document.getElementById('classForm');
+    if (form.style.display === 'none' || form.style.display === '') {
+        form.style.display = 'block';
+    } else {
+        form.style.display = 'none';
+    }
+}
+    </script>
+</head>
+<body>
+    <h1>Welcome to the home page</h1>
+    <button id="logout-btn">Log out</button>
+    <script>
+        const logoutBtn = document.querySelector('#logout-btn');
+        logoutBtn.addEventListener('click', e => {
+            e.preventDefault();
+            firebase.auth().signOut().then(() => {
+                // Sign out successful
+                console.log('User signed out!');
+                window.location.href = "/login";
+            }).catch(error => {
+                // Sign out failed
+                console.error(error);
+            });
+        });
+    </script>
+
+    <h2>Classes</h2>
+    <button onclick="showForm()">Add Class</button>
+
+    <form id="classForm" action="/addClass" method="post">
+        <label for="className">Class Name:</label><br>
+        <input type="text" id="className" name="className"><br>
+
+        <label for="sectionNumber">Section Number:</label><br>
+        <input type="number" id="sectionNumber" name="sectionNumber" required><br>
+
+    <span id="error" style="color: red; display: none;">Please enter a number for the section.</span><br>
+    <input type="submit" value="Submit">
+
+    </form>
+    //delete class function
+
+    <form action="/deleteClass" method="post">
+        <label for="classID">Class ID:</label><br>
+        <input type="number" id="classID" name="classID" required><br>
+        <input type="submit" value="Delete Class">
+    </form>
+
+
+
+
+    <!-- Class View -->
+    {% if  classes %}
+        {% for class in classes %}
+        <div>
+            <h3>{{ class.ClassName }}</h3>
+            <p>Section: {{ class.SectionID }}</p>
+        </div>
+    {% endfor %}
+
+    {% endif %}
+
+
+</body>
+</html>
